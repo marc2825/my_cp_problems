@@ -1,0 +1,30 @@
+# 自動項目と手動項目の区分は tools/README.md を参照してください。
+platform: yukicoder
+problem_no: 3589
+problem_id: 13248
+title: Make Ends Meet (Hard)
+url: https://yukicoder.me/problems/no/3589
+contest: yukicoder contest 504
+published_at: '2026-07-10T21:20:00+09:00'
+time_limit_ms: 2000
+memory_limit_mb: 1024
+author: marc2825
+difficulty: 4
+tags: []
+judge_type:
+source:
+  api_url: https://yukicoder.me/api/v1/problems/no/3589
+  author_id: 17084
+  tester_ids: '16208'
+  problem_type: 0
+  eps_mode: '-'
+  eps: '0.0'
+  enable_pure_judge: false
+  allowed_langs: []
+  statement_updated_at: '2026-08-29 01:01:08'
+  contest_id: 600
+  contest_url: https://yukicoder.me/contests/600
+  contest_start_at: '2026-07-10T21:20:00+09:00'
+  contest_end_at: '2026-07-10T23:20:00+09:00'
+  judge_type: standard
+  level: 4

@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<base href="https://yukicoder.me/problems/no/3751">
+<title>No.3751 Nonopoly</title>
+<style>
+body { margin: 0; background: #f6f7f9; color: #222;
+  font-family: system-ui, sans-serif; line-height: 1.8; }
+main { max-width: 960px; margin: 2rem auto; padding: 2rem;
+  background: white; border: 1px solid #ddd; border-radius: 8px; }
+h1 { font-size: 1.6rem; line-height: 1.5; }
+h4 { font-size: 1.25rem; border-bottom: 1px solid #ddd; padding-bottom: .3rem; }
+h5 { font-size: 1.1rem; } h6 { font-size: 1rem; margin: 1rem 0 .5rem; }
+.block { margin: 2rem 0; } .sample { margin: 2rem 0; }
+pre { background: #f4f5f6; border: 1px solid #ddd; border-radius: 4px;
+  padding: 1rem; overflow-x: auto; white-space: pre;
+  font-family: ui-monospace, monospace; line-height: 1.5; }
+code { font-family: ui-monospace, monospace; }
+table { border-collapse: collapse; } th, td { border: 1px solid #ccc; padding: .5rem; }
+img, svg { max-width: 100%; } a { color: #0969da; }
+@media (max-width: 640px) { main { margin: 0; padding: 1rem; border-radius: 0; } }
+</style>
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']],
+    displayMath: [['$$', '$$'], ['\\[', '\\]']],
+    processEscapes: true
+  },
+  options: {
+    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'code', 'annotation', 'annotation-xml']
+  },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js"></script>
+</head>
+<body>
+<main id="content" data-problem-id="13470">
+<h1>No.3751 Nonopoly</h1>
+<p><a href="https://yukicoder.me/problems/no/3751">yukicoder の公開ページ</a></p>
+<div class="block">
+<h4 class="shadow">問題文</h4>
+<p>
+\(N\) 社の企業と、それらの間に結ばれた \(M\) 件の契約があります。
+企業には \(1,2,\ldots,N\) の番号が付いています。
+契約 \(i\) は企業 \(u_i\) と企業 \(v_i\) の間に結ばれており、その価値は \(W_i\) です。
+</p>
+<p>
+Alice と Bob は、 Alice から始めて交互に、<b>まだ買収されていない企業を 1 社選んで買収し、自分のグループに加える</b>ゲームを行います。
+ゲームは、すべての企業が買収されるまで続きます。
+</p>
+<p>
+ゲーム終了後、各プレイヤーの利益を、<b>そのプレイヤーのグループに属する企業どうしの間に結ばれた契約の価値の総和</b>とします。
+</p>
+<p>
+ゲーム終了時点での二人の利益の差 『 \((\text{Alice の利益})-(\text{Bob の利益})\) 』 をこのゲームの <strong>「最終スコア」</strong> とします。
+</p>
+<p>
+Alice は最終スコアをできるだけ大きくしようとし、Bob はできるだけ小さくしようとします。
+両者が最適に行動したときの最終スコアを求めてください。
+</p>
+</div>
+
+<div class="block">
+<h4 class="shadow">制約</h4>
+<ul>
+<li>\(1 \le N \le 2 \times 10^5\)</li>
+<li>\(0 \le M \le \min(2 \times 10^5,\frac{N(N-1)}{2})\)</li>
+<li>\(1 \le u_i &lt; v_i \le N\)</li>
+<li>\((u_i,v_i)\) はすべて相異なる</li>
+<li>\(1 \le W_i \le 10^9\)</li>
+<li>入力はすべて整数</li>
+</ul>
+</div>
+
+<div class="block">
+<h4 class="shadow">入力</h4>
+<p>
+入力は以下の形式で標準入力から与えられます。
+</p>
+<pre>$N$ $M$
+$u_1$ $v_1$ $W_1$
+$u_2$ $v_2$ $W_2$
+$\vdots$
+$u_M$ $v_M$ $W_M$
+</pre>
+</div>
+
+<div class="block">
+<h4 class="shadow">出力</h4>
+<p>
+両者が最適に行動したときの最終スコアを 1 行で出力してください。
+</p>
+</div>
+
+<div class="block">
+<h4 class="shadow">サンプル</h4>
+<div class="sample" data-file="00_sample_01.txt">
+<h5 class="underline">サンプル1</h5>
+<div class="paragraph">
+<h6>入力</h6>
+<pre>5 4
+1 3 10
+1 4 2
+2 4 6
+2 5 6
+</pre>
+<h6>出力</h6>
+<pre>4
+</pre>
+<p>
+例えば、企業を買収する順番が
+\(2 \to 4 \to 5 \to 1 \to 3\)
+であったとします。<br/>
+Alice と Bob は交互に買収するため、最終的に Alice のグループは
+\(\{2,3,5\}\)、Bob のグループは \(\{1,4\}\) となります。<br/>
+Alice の利益に加算される契約は企業 \(2\) と企業 \(5\) の間の契約のみで、その価値は \(6\) です。
+Bob の利益に加算される契約は企業 \(1\) と企業 \(4\) の間の契約のみで、その価値は \(2\) です。<br/>
+したがって、最終スコアは \(6-2=4\) となり、これは両者が最適に行動したときの最終スコアと一致します。（この行動が最適であるとは限らない点に注意してください。）
+</p>
+</div>
+</div>
+<div class="sample" data-file="00_sample_02.txt">
+<h5 class="underline">サンプル2</h5>
+<div class="paragraph">
+<h6>入力</h6>
+<pre>3 1
+1 2 7
+</pre>
+<h6>出力</h6>
+<pre>0
+</pre>
+<p>
+いずれの企業とも契約を結んでいない企業が存在する場合もあります。
+</p>
+</div>
+</div>
+</div>
+</main>
+</body>
+</html>

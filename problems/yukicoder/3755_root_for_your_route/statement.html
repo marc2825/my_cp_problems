@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<base href="https://yukicoder.me/problems/no/3755">
+<title>No.3755 Root for Your Route</title>
+<style>
+body { margin: 0; background: #f6f7f9; color: #222;
+  font-family: system-ui, sans-serif; line-height: 1.8; }
+main { max-width: 960px; margin: 2rem auto; padding: 2rem;
+  background: white; border: 1px solid #ddd; border-radius: 8px; }
+h1 { font-size: 1.6rem; line-height: 1.5; }
+h4 { font-size: 1.25rem; border-bottom: 1px solid #ddd; padding-bottom: .3rem; }
+h5 { font-size: 1.1rem; } h6 { font-size: 1rem; margin: 1rem 0 .5rem; }
+.block { margin: 2rem 0; } .sample { margin: 2rem 0; }
+pre { background: #f4f5f6; border: 1px solid #ddd; border-radius: 4px;
+  padding: 1rem; overflow-x: auto; white-space: pre;
+  font-family: ui-monospace, monospace; line-height: 1.5; }
+code { font-family: ui-monospace, monospace; }
+table { border-collapse: collapse; } th, td { border: 1px solid #ccc; padding: .5rem; }
+img, svg { max-width: 100%; } a { color: #0969da; }
+@media (max-width: 640px) { main { margin: 0; padding: 1rem; border-radius: 0; } }
+</style>
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']],
+    displayMath: [['$$', '$$'], ['\\[', '\\]']],
+    processEscapes: true
+  },
+  options: {
+    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'code', 'annotation', 'annotation-xml']
+  },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js"></script>
+</head>
+<body>
+<main id="content" data-problem-id="13786">
+<h1>No.3755 Root for Your Route</h1>
+<p><a href="https://yukicoder.me/problems/no/3755">yukicoder の公開ページ</a></p>
+<div class="block">
+<h4 class="shadow">問題文</h4>
+<p>
+        頂点 $1,2,\dots ,N$ の $N$ 頂点からなる木があり、頂点 $v$ には整数 $A_v$ が書かれています。（ $A_v$ は負の場合もあります。） <br/>
+        また、 $i$ 番目の辺は頂点 $u_i,v_i$ を双方向に結んでいます。
+    </p>
+<p>
+        Bob と Alice は、次の手順で頂点を選びます。
+    </p>
+<ol>
+<li>
+            Bob が頂点 $r$ を $1$ つ選ぶ。
+        </li>
+<li>
+            Alice が、<b>頂点 $r$ を含む単純パス<sup>†</sup></b>の始点 $s$ と終点 $t$ を選び、
+            そのパスに沿って移動する。($s=t$ でもよい。)
+        </li>
+</ol>
+<p>
+        ここで、 $s$ から $t$ への単純パスに沿って移動するとき、
+        Alice の <b>$k$ 本目の辺の移動には $k$ 秒</b>かかります。
+    </p>
+<p>
+        Alice の得点を、<b>「移動中に訪れた頂点（端点含む）に書かれた整数の総和から、
+        総移動時間を引いた値」</b>とします。
+        <br/>
+        Alice は得点を最大化するように $s,t$ を選び、
+        Bob は Alice の得点を最小化するように $r$ を選びます。
+        <br/>
+        両者が最適に行動したときの Alice の得点を求めてください。
+    </p>
+</div>
+
+<div class="block">
+<h4 class="shadow">制約</h4>
+<ul>
+<li>$2 \leq N \leq 10^5$</li>
+<li>$-10^9 \leq A_v \leq 10^9$</li>
+<li>$1 \leq u_i,v_i \leq N$</li>
+<li>与えられるグラフは木</li>
+<li>入力はすべて整数</li>
+</ul>
+</div>
+
+<div class="block">
+<h4 class="shadow">入力</h4>
+<p>
+        入力は以下の形式で標準入力から与えられます。
+    </p>
+<pre>$N$
+$A_1\ A_2\ \dots\ A_N$
+$u_1\ v_1$
+$u_2\ v_2$
+$\vdots$
+$u_{N-1}\ v_{N-1}$</pre>
+</div>
+
+<div class="block">
+<h4 class="shadow">出力</h4>
+<p>
+        両者が最適に行動したときの Alice の得点を一行で出力してください。
+    </p>
+</div>
+
+<div class="block">
+<h4 class="shadow">サンプル</h4>
+<div class="sample" data-file="00_sample_1.txt">
+<h5 class="underline">サンプル1</h5>
+<div class="paragraph">
+<h6>入力</h6>
+<pre>5
+6 -1 8 -2 6
+1 2
+2 3
+2 4
+4 5
+</pre>
+<h6>出力</h6>
+<pre>5</pre>
+<p>
+                Bob が頂点 $4$ を選んだとします。
+                このとき Alice は、頂点 $3$ から頂点 $5$ まで移動することで、 
+                $
+                (8-1-2+6)-(1+2+3)=5
+                $
+                 点を得られます。
+                頂点 $4$ を通るどのようなパスを選んでも、これより大きな得点は得られません。
+            <br/>
+                一方、Bob が頂点 $1,2,3$ のいずれかを選ぶと、
+                Alice は頂点 $1$ から頂点 $3$ まで移動することで
+                $(6-1+8)-(1+2)=10$ 点を得られます。
+                また、Bob が頂点 $5$ を選ぶと、
+                Alice は $s=t=5$ とすることで $6$ 点を得られます。
+            </p>
+<p>
+                したがって Bob は頂点 $4$ を選ぶのが最適であり、このときの答えは $5$ です。
+            </p>
+</div>
+</div>
+</div>
+</main>
+</body>
+</html>

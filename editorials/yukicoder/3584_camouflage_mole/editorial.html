@@ -1,0 +1,141 @@
+<div class="block">
+    <h4 class="shadow">解説</h4>
+    <div>
+        <h5>想定解：主客転倒</h5>
+        
+        <p>
+            この問題は、<b>「主客転倒」</b> と呼ばれるテクニックを使い、
+            答えに対する寄与を別の方向から捉えると見通しよく数え上げることができます。
+        </p>
+
+        <p>
+            文字列 <span>\(S\)</span> を先に固定して <span>\(f(S)\)</span> を数えるのではなく、
+            加算される <code>mole</code> という部分列を先に固定し、
+            それを含むような文字列 <span>\(S\)</span> が何通りあるかを考えます。
+        </p>
+
+        <p>
+            <span>\(N\)</span> 文字ある <span>\(S\)</span> の中から、
+            <code>mole</code> を置く 4 箇所を選ぶ方法は
+            <span>\(\binom{N}{4}\)</span> 通りあります。
+            4 箇所を選んだあと、それらの位置には順に
+            <code>m</code>, <code>o</code>, <code>l</code>, <code>e</code>
+            を置く必要があります。
+        </p>
+
+        <p>
+            残りの <span>\(N-4\)</span> 箇所には、英小文字 26 文字のいずれを置いてもよいので、
+            選び方は <span>\(26^{N-4}\)</span> 通りです。<br>
+            （このとき、残りの <span>\(N-4\)</span> 箇所に <code>mole</code> が含まれていても、その分の寄与はそれらを固定する際に加算される点に注意してください。）
+        </p>
+
+        <p>
+            したがって、求める答えは
+        </p>
+
+        <p>
+            \[
+                \binom{N}{4} \times 26^{N-4}
+            \]
+        </p>
+
+        <p>
+            です。
+            実装する際は、値を <span>\(998244353\)</span> で割った余りとして計算し、
+            途中計算でのオーバーフローにも注意しましょう。
+        </p>
+
+        <p>
+            累乗 <span>\(26^{N-4}\)</span> は繰り返し二乗法などで計算できます。
+            よって計算量は <span>\(O(\log N)\)</span> です。
+        </p>
+
+        <p>
+            実装例：
+            <a href="https://yukicoder.me/submissions/1163101" target="_blank">C++ (2 ms)</a> /
+            <a href="https://yukicoder.me/submissions/1163093" target="_blank">PyPy (29 ms)</a>
+        </p>
+
+        <h5>別解：動的計画法</h5>
+
+        <p>
+            制約は <span>\(N \le 2 \times 10^5\)</span> と比較的余裕があるので、
+            動的計画法を用いた <span>\(O(N)\)</span> 解法でも十分に間に合います。
+        </p>
+
+        <p>
+            <span>\(T=\)</span><code>mole</code> とし、<span>\(T\)</span> の長さを <span>\(L=4\)</span> とします。
+            次のように <span>\(dp[i][j]\)</span> を定義します。
+        </p>
+
+        <p>
+            \[
+                dp[i][j]
+                =
+                \text{長さ } i \text{ のすべての英小文字列に対する、}
+                T \text{ の先頭 } j \text{ 文字を部分列として作る方法の総数}
+            \]
+        </p>
+
+        <p>
+            初期値は、空文字列が 1 通りあることから
+            <span>\(dp[0][0]=1\)</span>、それ以外は <span>\(0\)</span> です。
+        </p>
+
+        <p>
+            長さ <span>\(i\)</span> の文字列の末尾に 1 文字追加して、
+            長さ <span>\(i+1\)</span> の文字列を作ることを考えます。
+            既に作られていた部分列は、追加する文字 26 通りすべてに引き継がれるため、
+            それぞれ 26 倍されます。
+            ここで、追加した文字が <code>m</code>, <code>o</code>, <code>l</code>, <code>e</code>
+            のいずれかであっても、それを部分列の一部として使わない選び方もある点に注意してください。
+        </p>
+
+        <p>
+            さらに、追加した文字が <span>\(T\)</span> の <span>\(j+1\)</span> 文字目である場合、
+            それまでに作られていた <span>\(T\)</span> の先頭 <span>\(j\)</span> 文字の部分列に
+            その文字を付け足すことで、新しく先頭 <span>\(j+1\)</span> 文字の部分列を作れます。
+        </p>
+
+        <p>
+            よって、遷移は次のようになります。
+        </p>
+
+        <p>
+            \[
+                dp[i+1][j] \mathrel{+}= 26 \times dp[i][j]
+                \quad (0 \le j \le L)
+            \]
+        </p>
+
+        <p>
+            \[
+                dp[i+1][j+1] \mathrel{+}= dp[i][j]
+                \quad (0 \le j &lt; L)
+            \]
+        </p>
+
+        <p>
+            この遷移を <span>\(N\)</span> 回行うことで、答えは <span>\(dp[N][4]\)</span> になります。
+            よって、計算量は <span>\(O(N)\)</span> です。
+        </p>
+
+        <p>
+            なお、遷移は直前の行 <span>\(dp[i]\)</span> だけを使うため、
+            実装では <span>\(i\)</span> 次元を持たず、長さ <span>\(L+1\)</span> の配列 2 本、または 1 本を更新していけば十分です。
+        </p>
+
+        <p>
+            別解の実装例：
+            <a href="https://yukicoder.me/submissions/1163096" target="_blank">C++ (10 ms)</a> /
+            <a href="https://yukicoder.me/submissions/1163098" target="_blank">PyPy (50 ms)</a>
+        </p>
+    </div>
+<p>
+関連問題：
+<a href="https://atcoder.jp/contests/typical90/tasks/typical90_h" target="_blank">AtCoder 典型90 008</a> /
+<a href="https://codeforces.com/problemset/problem/1426/F" target="_blank">CodeForces 1426 F</a> 
+<br>
+（元ネタ：<a href="https://dic.nicovideo.jp/a/%E2%97%8B%C3%97%C3%97%E2%97%8B%E3%81%AE%C3%97%C3%97%E3%81%AE%E9%83%A8%E5%88%86%28%E8%A8%80%E8%91%89%E9%81%8A%E3%81%B3%29" target="_blank">○××○の××の部分(言葉遊び)</a> ）
+</p>
+</div>

@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<base href="https://yukicoder.me/problems/no/3584">
+<title>No.3584 Camouflage Mole</title>
+<style>
+body { margin: 0; background: #f6f7f9; color: #222;
+  font-family: system-ui, sans-serif; line-height: 1.8; }
+main { max-width: 960px; margin: 2rem auto; padding: 2rem;
+  background: white; border: 1px solid #ddd; border-radius: 8px; }
+h1 { font-size: 1.6rem; line-height: 1.5; }
+h4 { font-size: 1.25rem; border-bottom: 1px solid #ddd; padding-bottom: .3rem; }
+h5 { font-size: 1.1rem; } h6 { font-size: 1rem; margin: 1rem 0 .5rem; }
+.block { margin: 2rem 0; } .sample { margin: 2rem 0; }
+pre { background: #f4f5f6; border: 1px solid #ddd; border-radius: 4px;
+  padding: 1rem; overflow-x: auto; white-space: pre;
+  font-family: ui-monospace, monospace; line-height: 1.5; }
+code { font-family: ui-monospace, monospace; }
+table { border-collapse: collapse; } th, td { border: 1px solid #ccc; padding: .5rem; }
+img, svg { max-width: 100%; } a { color: #0969da; }
+@media (max-width: 640px) { main { margin: 0; padding: 1rem; border-radius: 0; } }
+</style>
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']],
+    displayMath: [['$$', '$$'], ['\\[', '\\]']],
+    processEscapes: true
+  },
+  options: {
+    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'code', 'annotation', 'annotation-xml']
+  },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js"></script>
+</head>
+<body>
+<main id="content" data-problem-id="13242">
+<h1>No.3584 Camouflage Mole</h1>
+<p><a href="https://yukicoder.me/problems/no/3584">yukicoder の公開ページ</a></p>
+<div class="block">
+<h4 class="shadow">問題文</h4>
+<p>
+        文字列 <code>camouflage</code> には、
+        <code>mole</code> が（連続しなくても良い）部分列として隠れています。
+    </p>
+<p>
+<code>a-z</code> の英小文字 26 文字からなる長さ <span>\(N\)</span> の文字列 <span>\(S\)</span> に対し、<span>\(f(S)\)</span> を
+        <b>「<span>\(S\)</span> の（連続しなくても良い）部分列のうち、文字列 <code>mole</code> と一致するものの個数」</b>
+        と定めます<span>†</span>。 <br/>
+</p>
+<p>
+        長さ <span>\(N\)</span> の英小文字列は全部で <span>\(26^N\)</span> 通りあります。
+        それらすべての文字列 <span>\(S\)</span> に対する <span>\(f(S)\)</span> の総和を
+        <span>\(998244353\)</span> で割った余りを求めてください。
+    </p>
+<hr/>
+<p>
+<span>†</span>
+<span>\(f(S)\)</span> は、より厳密には、
+        <span>\(1 \le i &lt; j &lt; k &lt; l \le N\)</span> かつ
+        <span>\(S_i=\mathrm{m},\ S_j=\mathrm{o},\ S_k=\mathrm{l},\ S_l=\mathrm{e}\)</span>
+        を満たす $4$ つ組 <span>\((i,j,k,l)\)</span> の個数となります。
+        
+    </p>
+</div>
+
+<div class="block">
+<h4 class="shadow">制約</h4>
+<ul>
+<li><span>\(4 \le N \le 2 \times 10^5\)</span></li>
+<li>入力は全て整数</li>
+</ul>
+</div>
+
+<div class="block">
+<h4 class="shadow">入力</h4>
+<p>
+        入力は以下の形式で標準入力から与えられます。
+    </p>
+<pre>$N$</pre>
+</div>
+
+<div class="block">
+<h4 class="shadow">出力</h4>
+<p>
+        答えを <span>\(998244353\)</span> で割った余りを 1 行で出力してください。
+    </p>
+</div>
+
+<div class="block">
+<h4 class="shadow">サンプル</h4>
+<div class="sample" data-file="01_sample_01.txt">
+<h5 class="underline">サンプル1</h5>
+<div class="paragraph">
+<h6>入力</h6>
+<pre>4</pre>
+<h6>出力</h6>
+<pre>1</pre>
+<p>
+                長さ 4 の文字列で <code>mole</code> を部分列として含むものは、文字列そのものが
+                <code>mole</code> である 1 通りだけです。
+            </p>
+</div>
+</div>
+<div class="sample" data-file="01_sample_02.txt">
+<h5 class="underline">サンプル2</h5>
+<div class="paragraph">
+<h6>入力</h6>
+<pre>6</pre>
+<h6>出力</h6>
+<pre>10140</pre>
+<p>
+</p>
+</div>
+</div>
+<div class="sample" data-file="01_sample_03.txt">
+<h5 class="underline">サンプル3</h5>
+<div class="paragraph">
+<h6>入力</h6>
+<pre>100</pre>
+<h6>出力</h6>
+<pre>774511835</pre>
+<p>
+                答えは非常に大きくなる可能性があるため、$998244353$ で割った余りを出力してください。
+            </p>
+</div>
+</div>
+</div>
+</main>
+</body>
+</html>

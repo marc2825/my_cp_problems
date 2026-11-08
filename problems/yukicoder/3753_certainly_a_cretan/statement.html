@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<base href="https://yukicoder.me/problems/no/3753">
+<title>No.3753 Certainly a Cretan</title>
+<style>
+body { margin: 0; background: #f6f7f9; color: #222;
+  font-family: system-ui, sans-serif; line-height: 1.8; }
+main { max-width: 960px; margin: 2rem auto; padding: 2rem;
+  background: white; border: 1px solid #ddd; border-radius: 8px; }
+h1 { font-size: 1.6rem; line-height: 1.5; }
+h4 { font-size: 1.25rem; border-bottom: 1px solid #ddd; padding-bottom: .3rem; }
+h5 { font-size: 1.1rem; } h6 { font-size: 1rem; margin: 1rem 0 .5rem; }
+.block { margin: 2rem 0; } .sample { margin: 2rem 0; }
+pre { background: #f4f5f6; border: 1px solid #ddd; border-radius: 4px;
+  padding: 1rem; overflow-x: auto; white-space: pre;
+  font-family: ui-monospace, monospace; line-height: 1.5; }
+code { font-family: ui-monospace, monospace; }
+table { border-collapse: collapse; } th, td { border: 1px solid #ccc; padding: .5rem; }
+img, svg { max-width: 100%; } a { color: #0969da; }
+@media (max-width: 640px) { main { margin: 0; padding: 1rem; border-radius: 0; } }
+</style>
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']],
+    displayMath: [['$$', '$$'], ['\\[', '\\]']],
+    processEscapes: true
+  },
+  options: {
+    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'code', 'annotation', 'annotation-xml']
+  },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js"></script>
+</head>
+<body>
+<main id="content" data-problem-id="13746">
+<h1>No.3753 Certainly a Cretan</h1>
+<p><a href="https://yukicoder.me/problems/no/3753">yukicoder の公開ページ</a></p>
+<div class="block">
+<h4 class="shadow">問題文</h4>
+<p>
+$1$ から $N$ までの番号が付いた $N$ 人が、番号順に一列に並んでいます。
+各人は <b>「正直者」</b> または <b>「嘘つき」</b> のいずれかの種類に分類されます。<br/>
+二択の質問をされたとき、<b>正直者は必ず正しく</b>答え、
+<b>嘘つきは必ず正しい答えと逆</b>の答えをします。
+</p>
+<p>
+人 $i$ は、次の質問に <code>Yes</code> または <code>No</code> で答えます。
+</p>
+<blockquote>
+人 $1,2,\ldots,i$ のうち、<b>自分と同じ種類の人</b>は<b>過半数<sup>†</sup></b>を占めていますか？
+</blockquote>
+<p>
+全員の回答結果を表す長さ $N$ の文字列 $S$ が与えられます。
+$S_i=$ <code>Y</code> は人 $i$ の回答が <code>Yes</code>、
+$S_i=$ <code>N</code> は <code>No</code> であることを表します。
+<br/>
+文字列 $S$ に対して、$Q$ 個のクエリを順に処理してください<sup>‡</sup>。
+クエリには以下の $2$ 種類が存在します。
+</p>
+<ul>
+<li>
+<code>1 i</code>：
+人 $i$ の回答 $S_i$ を<b>反転</b>してください。
+すなわち、$S_i=$ <code>Y</code> なら <code>N</code> に、
+$S_i=$ <code>N</code> なら <code>Y</code> に変更してください。
+</li>
+<li>
+<code>2 K</code>：
+現在の $S$ に対して、
+<b>嘘つきがちょうど $K$ 人で、全員の回答が $S$ と一致するような各人の種類の割り当ての個数</b>
+を $998244353$ で割った余りで出力してください。
+</li>
+</ul>
+<hr/>
+<p>
+<sup>†</sup> 「過半数」とは、全体の人数が $x$ 人であるときに、
+$\left\lfloor \frac{x}{2} \right\rfloor + 1$ 人以上であることを意味します。<br/>
+<sup>‡</sup> 各クエリは独立ではありません。
+$1$ 種類目のクエリによる $S$ の変更は、それ以降のクエリにも引き継がれます。
+</p>
+</div>
+
+<div class="block">
+<h4 class="shadow">制約</h4>
+<ul>
+<li>$1 \leq N \leq 10^6$</li>
+<li>$1 \leq Q \leq 10^5$</li>
+<li>$S$ は <code>Y</code> と <code>N</code> からなる長さ $N$ の文字列</li>
+<li>$1$ 種類目のクエリでは、$1 \leq i \leq N$</li>
+<li>$2$ 種類目のクエリでは、$0 \leq K \leq N$</li>
+<li>$2$ 種類目のクエリが $1$ 個以上含まれる</li>
+<li>$N,Q,i,K$ は整数</li>
+</ul>
+</div>
+
+<div class="block">
+<h4 class="shadow">入力</h4>
+<p>
+入力は以下の形式で標準入力から与えられます。
+</p>
+<pre>$N$ $Q$
+$S$
+$\mathrm{query}_1$
+$\mathrm{query}_2$
+$\vdots$
+$\mathrm{query}_Q$</pre>
+<p>
+各クエリは、以下のいずれかの形式で与えられます。
+</p>
+<pre>1 $i$</pre>
+<pre>2 $K$</pre>
+</div>
+
+<div class="block">
+<h4 class="shadow">出力</h4>
+<p>
+$2$ 種類目のクエリが与えられるたびに、そのクエリに対する答えを $998244353$ で割った余りで一行に出力してください。
+</p>
+</div>
+
+<div class="block">
+<h4 class="shadow">サンプル</h4>
+<div class="sample" data-file="00_sample_00.txt">
+<h5 class="underline">サンプル1</h5>
+<div class="paragraph">
+<h6>入力</h6>
+<pre>4 6
+NNNN
+2 2
+1 1
+2 2
+1 2
+2 2
+2 3</pre>
+<h6>出力</h6>
+<pre>2
+0
+1
+1</pre>
+<p>
+以下では、正直者を <code>H</code>、嘘つきを <code>L</code> と表します。
+<br/>
+最初、$S=$ <code>NNNN</code> です。
+嘘つきがちょうど $2$ 人で条件を満たす割り当ては、
+<code>LLHH</code>, <code>LHLH</code> の $2$ 通りです。
+<br/>
+次に、人 $1$ の回答を反転すると、
+$S=$ <code>YNNN</code> となります。
+このとき、嘘つきがちょうど $2$ 人で条件を満たす割り当ては存在しません。
+<br/>
+さらに、人 $2$ の回答を反転すると、
+$S=$ <code>YYNN</code> となります。
+このとき、条件を満たす割り当ては
+<code>HLLH</code>, <code>HLLL</code> の $2$ 通りです。
+それぞれの嘘つきの人数は $2$ 人、$3$ 人であるため、
+最後の $2$ つのクエリに対する答えはいずれも $1$ となります。
+</p>
+</div>
+</div>
+<div class="sample" data-file="00_sample_01.txt"> <h5 class="underline">サンプル2</h5>
+<div class="paragraph"> <h6>入力</h6>
+<pre>53 17
+YYYYYYYYYYYYYYNNNNNNNNNNNNNNYYYYYYYYYYYYYYYYNNNNNNNNN
+2 27
+2 30
+1 53
+2 26
+1 53
+2 28
+1 11
+2 0
+1 12
+2 27
+2 28
+1 11
+2 53
+1 12
+2 29
+2 30
+2 31</pre>
+<h6>出力</h6>
+<pre>72814577
+108940334
+689767761
+653642004
+0
+83916727
+238511167
+0
+118112539
+108940334
+263178630</pre>
+<p>
+クエリ 1 では、同じ $i$ が複数回選ばれることがあります。
+また、答えは非常に大きくなる可能性があるため、$998244353$ で割った余りを出力してください。
+</p>
+</div>
+</div>
+</div>
+</main>
+</body>
+</html>

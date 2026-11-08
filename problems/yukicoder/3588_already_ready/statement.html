@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<base href="https://yukicoder.me/problems/no/3588">
+<title>No.3588 Already Ready</title>
+<style>
+body { margin: 0; background: #f6f7f9; color: #222;
+  font-family: system-ui, sans-serif; line-height: 1.8; }
+main { max-width: 960px; margin: 2rem auto; padding: 2rem;
+  background: white; border: 1px solid #ddd; border-radius: 8px; }
+h1 { font-size: 1.6rem; line-height: 1.5; }
+h4 { font-size: 1.25rem; border-bottom: 1px solid #ddd; padding-bottom: .3rem; }
+h5 { font-size: 1.1rem; } h6 { font-size: 1rem; margin: 1rem 0 .5rem; }
+.block { margin: 2rem 0; } .sample { margin: 2rem 0; }
+pre { background: #f4f5f6; border: 1px solid #ddd; border-radius: 4px;
+  padding: 1rem; overflow-x: auto; white-space: pre;
+  font-family: ui-monospace, monospace; line-height: 1.5; }
+code { font-family: ui-monospace, monospace; }
+table { border-collapse: collapse; } th, td { border: 1px solid #ccc; padding: .5rem; }
+img, svg { max-width: 100%; } a { color: #0969da; }
+@media (max-width: 640px) { main { margin: 0; padding: 1rem; border-radius: 0; } }
+</style>
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']],
+    displayMath: [['$$', '$$'], ['\\[', '\\]']],
+    processEscapes: true
+  },
+  options: {
+    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'code', 'annotation', 'annotation-xml']
+  },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js"></script>
+</head>
+<body>
+<main id="content" data-problem-id="13243">
+<h1>No.3588 Already Ready</h1>
+<p><a href="https://yukicoder.me/problems/no/3588">yukicoder の公開ページ</a></p>
+<div class="block">
+<h4 class="shadow">問題文</h4>
+<p>
+        $1$ から $N$ までの番号が付いた $N$ チームが大会を行います。各チームの初期スコアは $0$ です。
+    </p>
+<p>
+        大会は、以下のルールに従って進行します。
+    </p>
+<ul>
+<li>大会では、後述の終了条件が満たされるまで $1$ 試合ずつ順に試合が行われ、各試合では全 $N$ チームのうちちょうど $1$ チームが<b>「勝者」</b>となります。</li>
+<li>1 試合ごとに、勝者は $2$ 点を得て、勝者でない $N-1$ チームはそれぞれ $1$ 点を得ます。</li>
+<li>ある試合の開始直前にスコアが $K$ 以上であるチームを <b>「ready」</b> と呼び、ready なチームが勝者になった場合、その試合を最後に大会は終了し、そのチームが<b>「優勝」</b>します。</li>
+</ul>
+<p>
+        大会終了時点での<b>各チームの最終スコア<sup>†</sup></b> $A_1,A_2,\dots,A_N$ と、<b>優勝チーム（最後の試合の勝者）</b> $M$ が与えられます。<br/>
+        この情報と<b>矛盾しない大会進行</b>が存在するか判定してください。<br/>
+        また、存在する場合は、そのような大会進行を表す勝者列のうち、<b>辞書順最小<sup>‡</sup></b>のものを出力してください。
+    </p>
+<hr/>
+<p>
+<sup>†</sup> 最終スコアとは、優勝が確定した試合で得点が加算されたあとのスコアを指します。<br/>
+<sup>‡</sup> $2$ つの列 $P,Q$ について、最初に異なる位置を $j$ としたとき $P_j&lt;Q_j$ ならば、$P$ は $Q$ より辞書順で小さいとします。
+        ただし、一方がもう一方の接頭辞である場合は、短い方を辞書順で小さいとします。
+    </p>
+</div>
+
+<div class="block">
+<h4 class="shadow">制約</h4>
+<ul>
+<li>$2 \leq N \leq 2\times 10^5$</li>
+<li>$1 \leq K \leq 2\times 10^5$</li>
+<li>$1 \leq M \leq N$</li>
+<li>$0 \leq A_i \leq 2\times 10^5$</li>
+<li>入力はすべて整数</li>
+</ul>
+</div>
+
+<div class="block">
+<h4 class="shadow">入力</h4>
+<p>
+        入力は以下の形式で標準入力から与えられます。
+    </p>
+<pre>$N\ K$
+$M$
+$A_1\ A_2\ \dots\ A_N$</pre>
+</div>
+
+<div class="block">
+<h4 class="shadow">出力</h4>
+<p>
+        条件を満たす大会進行が存在しない場合は、<code>-1</code> を $1$ 行で出力してください。
+    </p>
+<p>
+        存在する場合は、次の形式で出力してください。
+    </p>
+<pre>$T$
+$b_1\ b_2\ \dots\ b_T$</pre>
+<p>
+        ここで、$T$ は試合数、$b_t$ は $t$ 試合目の勝者のチーム番号で、$T$ は $1$ 以上の整数であり、各 $b_t$ は $1 \leq b_t \leq N$ を満たす整数です。<br/>
+        条件を満たす勝者列が複数存在する場合、その中で<b>辞書順最小</b>のものを出力してください。
+    </p>
+</div>
+
+<div class="block">
+<h4 class="shadow">サンプル</h4>
+<div class="sample" data-file="01_sample_1.txt">
+<h5 class="underline">サンプル1</h5>
+<div class="paragraph">
+<h6>入力</h6>
+<pre>3 2
+1
+4 4 4</pre>
+<h6>出力</h6>
+<pre>3
+2 3 1</pre>
+<p>
+            勝者列 $(2,3,1)$ に対する各試合後のスコアは、
+            $(1,2,1) \rightarrow (2,3,3) \rightarrow (4,4,4)$
+            となります。<br/>
+            最後の試合の開始直前、チーム $1$ のスコアは $2$ であり ready なので、
+            最後にチーム $1$ が勝って大会は終了します。<br/>
+            他にも $(3,2,1)$ が条件を満たしますが、辞書順最小は $(2,3,1)$ です。
+        </p>
+</div>
+</div>
+<div class="sample" data-file="01_sample_2.txt">
+<h5 class="underline">サンプル2</h5>
+<div class="paragraph">
+<h6>入力</h6>
+<pre>3 2
+1
+4 3 5</pre>
+<h6>出力</h6>
+<pre>-1</pre>
+<p>
+                条件を満たす大会進行は存在しません。
+            </p>
+</div>
+</div>
+<div class="sample" data-file="01_sample_3.txt">
+<h5 class="underline">サンプル3</h5>
+<div class="paragraph">
+<h6>入力</h6>
+<pre>4 4
+1
+7 6 6 6</pre>
+<h6>出力</h6>
+<pre>5
+1 2 3 4 1</pre>
+<p>
+                例えば $(2,3,4,1,1)$ も条件を満たしますが、辞書順最小ではありません。<br/>
+                辞書順最小の勝者列は $(1,2,3,4,1)$ です。
+            </p>
+</div>
+</div>
+</div>
+</main>
+</body>
+</html>

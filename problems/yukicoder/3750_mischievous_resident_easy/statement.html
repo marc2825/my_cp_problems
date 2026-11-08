@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<base href="https://yukicoder.me/problems/no/3750">
+<title>No.3750 Mischievous Resident (Easy)</title>
+<style>
+body { margin: 0; background: #f6f7f9; color: #222;
+  font-family: system-ui, sans-serif; line-height: 1.8; }
+main { max-width: 960px; margin: 2rem auto; padding: 2rem;
+  background: white; border: 1px solid #ddd; border-radius: 8px; }
+h1 { font-size: 1.6rem; line-height: 1.5; }
+h4 { font-size: 1.25rem; border-bottom: 1px solid #ddd; padding-bottom: .3rem; }
+h5 { font-size: 1.1rem; } h6 { font-size: 1rem; margin: 1rem 0 .5rem; }
+.block { margin: 2rem 0; } .sample { margin: 2rem 0; }
+pre { background: #f4f5f6; border: 1px solid #ddd; border-radius: 4px;
+  padding: 1rem; overflow-x: auto; white-space: pre;
+  font-family: ui-monospace, monospace; line-height: 1.5; }
+code { font-family: ui-monospace, monospace; }
+table { border-collapse: collapse; } th, td { border: 1px solid #ccc; padding: .5rem; }
+img, svg { max-width: 100%; } a { color: #0969da; }
+@media (max-width: 640px) { main { margin: 0; padding: 1rem; border-radius: 0; } }
+</style>
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']],
+    displayMath: [['$$', '$$'], ['\\[', '\\]']],
+    processEscapes: true
+  },
+  options: {
+    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'code', 'annotation', 'annotation-xml']
+  },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js"></script>
+</head>
+<body>
+<main id="content" data-problem-id="13471">
+<h1>No.3750 Mischievous Resident (Easy)</h1>
+<p><a href="https://yukicoder.me/problems/no/3750">yukicoder の公開ページ</a></p>
+<div class="block">
+<h4 class="shadow">問題文</h4>
+<p>
+    $N$ 階建てのビルに $M$ 台のエレベーターがあります。
+    エレベーターには $1,2,\ldots,M$ の番号が付いており、互いに区別されます。
+</p>
+<p>
+    最初、エレベーター $i$ は $S_i$ 階に停止しています。
+    同じ階に複数のエレベーターが停止している場合もあります。
+</p>
+<p>
+    あなたは階段を使って移動し、各階にある「呼び出しボタン」を任意の回数押すことができます。
+    $F$ 階 $(1 \leq F \leq N)$ のボタンを押すと、以下の規則に従ってエレベーターがちょうど $1$ 台移動します。
+</p>
+<ul>
+<li>
+<b>現在位置 $x$ から $F$ 階までの距離 $|x-F|$ が
+        最も小さい</b>エレベーターが、$F$ 階に移動する。
+    </li>
+<li>
+        距離が最も小さいエレベーターが<b>複数ある場合</b>は、
+        その中から移動させるエレベーターを<b>自由に $1$ 台選ぶ</b>ことができる。
+    </li>
+</ul>
+<p>
+    エレベーターの目的の配置を表す整数列
+    $G_1,G_2,\ldots,G_M$ が与えられます。
+</p>
+<p>
+    $Q$ 個のテストケースが与えられるので、
+    各テストケースについて、呼び出しボタンを任意の回数押すことで、
+    すべての $i$ についてエレベーター $i$ を $G_i$ 階に停止させることが可能か判定してください。
+</p>
+</div>
+
+<div class="block">
+<h4 class="shadow">制約</h4>
+<ul>
+<li>$1 \leq Q \leq 2 \times 10^5$</li>
+<li>$1 \leq N \leq 10^9$</li>
+<li>$1 \leq M \leq 2 \times 10^5$</li>
+<li>$1 \leq S_i \leq N$</li>
+<li>$1 \leq G_i \leq N$</li>
+<li>すべてのテストケースにおける $M$ の総和は $2 \times 10^5$ 以下</li>
+<li>入力はすべて整数</li>
+</ul>
+</div>
+
+<div class="block">
+<h4 class="shadow">入力</h4>
+<p>
+    入力は以下の形式で標準入力から与えられます。
+    ここで、$q\ (1 \leq q \leq Q)$ 番目のテストケースを
+    $\mathrm{case}_q$ と表します。
+</p>
+<pre>$Q$
+$\mathrm{case}_1$
+$\mathrm{case}_2$
+$\vdots$
+$\mathrm{case}_Q$
+</pre>
+<p>
+    各テストケースは以下の形式で与えられます。
+</p>
+<pre>$N$ $M$
+$S_1$ $S_2$ $\ldots$ $S_M$
+$G_1$ $G_2$ $\ldots$ $G_M$
+</pre>
+<p>
+    ここで、$S_i$ はエレベーター $i$ の初期位置を、
+    $G_i$ はエレベーター $i$ の目的の配置を表します。
+</p>
+</div>
+
+<div class="block">
+<h4 class="shadow">出力</h4>
+<p>
+    $Q$ 行出力してください。<br/>
+    $q$ 行目には、$q$ 番目のテストケースについて目的の配置にすることが可能なら
+    <code>Yes</code> を、不可能なら <code>No</code> を出力してください。
+</p>
+</div>
+
+<div class="block">
+<h4 class="shadow">サンプル</h4>
+<div class="sample" data-file="00_sample_01.txt">
+<h5 class="underline">サンプル1</h5>
+<div class="paragraph">
+<h6>入力</h6>
+<pre>5
+10 3
+8 5 2
+9 6 3
+10 2
+2 8
+8 2
+10 3
+5 5 8
+6 4 9
+20 2
+1 14
+5 7
+10 1
+5
+5
+</pre>
+<h6>出力</h6>
+<pre>Yes
+No
+Yes
+Yes
+Yes
+</pre>
+<p>
+            $1$ 番目のテストケースでは、例えば $9$ 階、$6$ 階、$3$ 階の順に
+            ボタンを押すことで、各エレベーターを目的の配置へ移動できます。
+        </p>
+<p>
+            $2$ 番目のテストケースでは、どのようにボタンを押しても、目的の配置にはできません。
+            エレベーターは互いに区別される点に注意してください。
+        </p>
+<p>
+        $3$ 番目のテストケースでは、例えば $9$ 階、$4$ 階、$6$ 階の順に
+        ボタンを押すことで、目的の配置にできます。<br/>
+        エレベーター $1$ とエレベーター $2$ は、最初どちらも $5$ 階にいますが、
+        距離が最も小さいエレベーターが複数ある場合は、
+        その中から移動させるエレベーターを自由に選べる点に注意してください。
+    </p>
+</div>
+</div>
+</div>
+</main>
+</body>
+</html>

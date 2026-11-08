@@ -1,0 +1,224 @@
+<div class="block">
+<h4 class="shadow">解説</h4>
+
+<p>
+隣接する $2$ 文字を入れ替える操作では、<code>d</code>, <code>o</code>, <code>g</code> の出現回数は変わりません。
+したがって、まず $S$ と $T$ で各文字の出現回数が異なるなら、答えは <code>No</code> です。
+</p>
+
+<p>
+以降、出現回数が等しい場合を考えます。
+この問題では、次の条件を満たす文字列を <b>「壁型」</b> と呼ぶことにします。
+</p>
+
+<ul>
+<li>
+<code>o</code> をすべて取り除いた文字列が、$1$ 個以上の <code>g</code> の後に $1$ 個以上の <code>d</code> が続く形である。
+</li>
+<li>
+元の文字列において、最後の <code>g</code> と最初の <code>d</code> の間にある <code>o</code> の個数が $3$ 個以上である。
+</li>
+</ul>
+
+<p>
+例えば <code>gooood</code>, <code>ogogoooddoo</code> などが壁型です。
+</p>
+
+<p>
+このとき、答えは次のように判定できます。
+</p>
+
+<blockquote>
+<p>
+<b>
+$S$ と $T$ の各文字の出現回数が等しく、かつ $S$ が壁型であるかどうかと $T$ が壁型であるかどうかが一致するなら <code>Yes</code>、そうでなければ <code>No</code> です。
+</b>
+</p>
+</blockquote>
+
+<h5>壁型の文字列の性質</h5>
+
+<p>
+例えば <code>goood</code> を考えます。
+これは良い文字列ではありませんが、左端の <code>g</code> を右に動かすと <code>ogood</code> となり、<code>good</code> が現れます。
+また、右端の <code>d</code> を左に動かすと <code>goodo</code> となり、やはり <code>good</code> が現れます。
+</p>
+
+<p>
+一般に、壁型の文字列では、すべての <code>g</code> がすべての <code>d</code> より左にあり、その境界には $3$ 個以上の <code>o</code> があります。
+この境界を越えて <code>g</code> と <code>d</code> の順序を変えようとすると、どこかで <code>g</code> と <code>d</code> の間の <code>o</code> がちょうど $2$ 個になり、<code>good</code> が現れてしまいます。
+</p>
+
+<p>
+したがって、壁型の文字列から非壁型の文字列へ移ることはできません。
+また、この操作は可逆であるため、非壁型の文字列から壁型の文字列へ移ることもできません。<br>
+つまり、「壁型であるかどうか」は操作によって変わらない不変量です。
+</p>
+
+<h5>壁型の文字列同士</h5>
+
+<p>
+次に、同じ出現回数を持つ壁型の文字列同士は互いに到達可能であることを説明します。
+</p>
+
+<p>
+壁型の文字列では、<code>o</code> を除いた列はすでに <code>g</code> が先、<code>d</code> が後の順になっています。
+そのため、<code>g</code> と <code>d</code> の相対的な順序を変える必要はありません。
+必要なのは、<code>o</code> を左右に動かすことだけです。
+<br>
+壁型では、最後の <code>g</code> と最初の <code>d</code> の間に常に $3$ 個以上の <code>o</code> を保ったまま操作できます。
+このとき、境界の左側には <code>d</code> がなく、右側には <code>g</code> がないため、<code>good</code> が新たに現れる可能性があるのは境界付近だけです。
+しかし、境界にある <code>o</code> の個数を $3$ 個以上に保っている限り、<code>g</code> と <code>d</code> の間の <code>o</code> がちょうど $2$ 個になることはありません。
+</p>
+
+<p>
+したがって、外側にある余分な <code>o</code> を境界部分へ集めることができます。
+最終的に、同じ出現回数を持つ壁型の文字列はすべて
+<code>gg...gooo...od...d</code>
+という形に移すことができるため、壁型の文字列同士は互いに到達可能です。
+</p>
+
+<h5>非壁型の文字列同士</h5>
+
+
+
+<p>
+次に、同じ出現回数を持つ非壁型の文字列同士が互いに到達可能であることを示します。
+</p>
+
+<p>
+文字に
+<code>o</code> &lt; <code>g</code> &lt; <code>d</code>
+という順序を入れます。
+そして、各文字をこの順に並べた
+</p>
+
+<p>
+<code>oo...og...gd...d</code>
+</p>
+
+<p>
+という形の文字列を考えます。各文字からなる部分は空でも構いません。
+この文字列は <code>good</code> を含みません。
+</p>
+
+<p>
+隣り合う $2$ 文字がこの順序と逆に並んでいる箇所、すなわち
+<code>go</code>, <code>do</code>, <code>dg</code>
+を<b>「隣接した逆転」</b>と呼びます。
+隣接した逆転を入れ替えると、この順序に関する転倒数は $1$ 減ります。
+</p>
+
+<p>
+したがって、非壁型の文字列がまだ <code>oo...og...gd...d</code> という形でないときに、必ず許される隣接した逆転の入れ替えが存在することを示せば十分です。
+そのような操作を繰り返せば、転倒数が有限回で $0$ となり、目的の形に到達します。
+</p>
+
+<details>
+<summary><b>各隣接逆転の入れ替えが許されない条件</b></summary>
+
+<p>
+まず、<code>dg</code> を <code>gd</code> に入れ替える操作は常に許されます。
+入れ替え後の <code>g</code> と <code>d</code> は隣り合っているため、この入れ替えによって新たな <code>good</code> が生じることはありません。
+</p>
+
+<p>
+次に、<code>go</code> を <code>og</code> に入れ替える場合を考えます。
+この操作によって新たな <code>good</code> が生じるなら、その <code>good</code> は入れ替え後の <code>g</code> から始まります。
+したがって、入れ替え前の局所形は <code>goood</code>です。
+つまり、<code>go</code> の入れ替えが許されないのは、その <code>go</code> が <code>goood</code> の先頭である場合に限ります。
+</p>
+
+<p>
+同様に、<code>do</code> を <code>od</code> に入れ替えることで新たな <code>good</code> が生じるなら、その <code>good</code> は入れ替え後の <code>d</code> で終わります。
+したがって、入れ替え前の局所形は <code>godo</code> です。
+つまり、<code>do</code> の入れ替えが許されないのは、その <code>do</code> が <code>godo</code> の末尾である場合に限ります。
+</p>
+
+</details>
+<br>
+
+<p>
+ここで、現在の文字列が <code>oo...og...gd...d</code> という形でなく、さらに許される隣接した逆転の入れ替えが $1$ つも存在しないと仮定します。
+</p>
+
+<p>
+<code>dg</code> の入れ替えは常に許されるため、文字列中に <code>dg</code> は存在しません。
+</p>
+
+<p>
+さらに、文字列中に <code>do</code> も存在しません。
+実際、<code>do</code> が存在するなら、その入れ替えは許されないという仮定より、その <code>do</code> は <code>godo</code> の末尾です。
+<br>
+しかし、この <code>godo</code> の先頭には <code>go</code> があります。
+この <code>go</code> が入れ替え不可能であるためには <code>goood</code> の先頭でなければなりませんが、<code>godo</code> では <code>go</code> の直後の文字が <code>d</code> です。
+したがって、この <code>go</code> は入れ替え可能となり、矛盾します。
+</p>
+
+<p>
+よって、文字列中には <code>dg</code> も <code>do</code> も存在しません。
+したがって、一度 <code>d</code> が現れた後には <code>d</code> しか現れず、すべての <code>d</code> は文字列の末尾に連続して並んでいます。
+<br>
+現在の文字列はまだ整列された形ではないため、少なくとも $1$ つの隣接した逆転が存在します。
+<code>dg</code> と <code>do</code> は存在しないので、少なくとも $1$ つの <code>go</code> が存在します。
+</p>
+
+<p>
+最も右にある <code>go</code> に注目します。
+この <code>go</code> は入れ替え不可能なので、局所形は <code>goood</code> です。
+<br>
+この <code>goood</code> の末尾にある <code>d</code> より右側は、すべて <code>d</code> です。
+また、その先頭にある <code>g</code> より左側には <code>d</code> は存在しません。
+<br>
+さらに、その <code>g</code> より左側には <code>go</code> も存在しません。
+もし別の <code>go</code> が存在するなら、それも入れ替え不可能なので <code>goood</code> の先頭でなければなりません。
+すると、注目している <code>g</code> より左側に <code>d</code> が存在することになり、矛盾します。
+<br>
+したがって、注目している <code>g</code> より左側は、すべての <code>o</code> が先、その後にすべての <code>g</code> が続く形です。
+</p>
+
+<p>
+以上より、許される隣接した逆転が存在しない非整列状態は、必ず <code>oo...og...gooodd...d</code> という形になります。
+<br>
+この文字列から <code>o</code> をすべて取り除くと、$1$ 個以上の <code>g</code> の後に $1$ 個以上の <code>d</code> が続く形になります。
+また、最後の <code>g</code> と最初の <code>d</code> の間には、ちょうど $3$ 個の <code>o</code> があります。
+したがって、この文字列は壁型です。
+<br>
+一方、現在考えている文字列は非壁型なので、これは矛盾です。
+よって、非壁型の文字列が <code>oo...og...gd...d</code> という形でない限り、必ず許される隣接した逆転の入れ替えが存在します。
+<br>
+そのような入れ替えを繰り返すと、転倒数は毎回 $1$ ずつ減るため、有限回で <code>oo...og...gd...d</code> という形に到達します。
+<br>
+したがって、同じ出現回数を持つすべての非壁型の文字列は、同じ文字列 <code>oo...og...gd...d</code> へ変形できます。
+また、許される操作は可逆なので、同じ出現回数を持つ非壁型の文字列同士は互いに到達可能です。
+</p>
+
+
+
+
+<h5>実装</h5>
+
+<p>
+以上より、操作が可逆であることにも注意すると、各文字の出現回数と文字列が壁型であるかどうかだけを見れば十分です。
+</p>
+
+<p>
+壁型であるかどうかは $O(|S|)$ で判定できます。
+まず <code>o</code> 以外の文字を左から見て、<code>d</code> を見た後に <code>g</code> が現れたら壁型ではありません。
+また、<code>g</code> または <code>d</code> が存在しない場合も壁型ではありません。<br>
+残りの場合、最後の <code>g</code> と最初の <code>d</code> の間にある <code>o</code> の個数を数えます。
+この個数が $3$ 個以上なら壁型、そうでなければ非壁型です。
+</p>
+
+<p>
+各テストケースについて、出現回数と壁型判定を行えばよいです。
+全体の計算量は $O(\sum |S|)$ で実装できます（実装例：<a href="https://yukicoder.me/submissions/1170739" target="_blank">C++ (40ms)</a> / <a href="https://yukicoder.me/submissions/1170740" target="_blank">PyPy (209ms)</a>）。
+</p>
+
+<p>
+関連問題：
+<a href="https://codeforces.com/problemset/problem/1697/C" target="_blank">CodeForces ECR130 C</a> / <a href="https://atcoder.jp/contests/agc066/tasks/agc066_f" target="_blank">AGC066 F</a>
+
+    
+</p>
+</div>
