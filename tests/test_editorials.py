@@ -9,6 +9,7 @@ import yaml
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 
+from yukicoder.archive import EDITORIAL
 from yukicoder.editorial import MARKER, build_editorial_plan
 
 HTML = r'''<div class="block">
@@ -67,8 +68,24 @@ class EditorialTests(unittest.TestCase):
     def test_hand_written_markdown_is_preserved(self):
         self.output.write_text("# 手書きの解説\n")
         plan = self.convert()
-        self.assertEqual(plan.preserved, ["3584_camouflage_mole/editorial.md"])
+        self.assertEqual(plan.preserved, ["editorials/3584_camouflage_mole/editorial.md"])
         self.assertEqual(self.output.read_text(), "# 手書きの解説\n")
+
+    def test_template_problem_editorial_is_linked_once(self):
+        problem = self.problems / "3584_camouflage_mole/editorial.md"
+        problem.write_text(EDITORIAL)
+        self.convert()
+        self.assertEqual(problem.read_text(),
+                         "# 解説\n\n[解説を読む](../../editorials/3584_camouflage_mole/editorial.md)"
+                         "（[HTML 版](../../editorials/3584_camouflage_mole/editorial.html)）\n")
+        self.assertEqual(self.convert().changes, [])
+
+    def test_hand_written_problem_editorial_is_not_linked(self):
+        problem = self.problems / "3584_camouflage_mole/editorial.md"
+        problem.write_text(EDITORIAL.replace("TODO", "自分で書いた方針", 1))
+        before = problem.read_bytes()
+        self.convert()
+        self.assertEqual(problem.read_bytes(), before)
 
     def test_title_falls_back_to_problem_number(self):
         (self.problems / "3584_camouflage_mole/metadata.yml").unlink()

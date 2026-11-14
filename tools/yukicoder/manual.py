@@ -113,7 +113,7 @@ def build_manual_plan(archive_root, *, repository_root=None, problem_plans=()):
         if not has_editorial(view, directory, manual_editorial, scope):
             prepare(manual_editorial)
             status.required.append(f"解説: {manual_editorial / 'editorial.html'} に本文を保存し、"
-                                   "convert_editorials.py で Markdown 版を作って editorial.md からリンクする"
+                                   "convert_editorials.py を実行する（Markdown 版の作成と editorial.md からのリンクを自動で行う）"
                                    "（--with-assets での取得も可）")
         for section, label in (("solution", "想定解"), ("validator", "バリデータ")):
             prepare(directory / section)

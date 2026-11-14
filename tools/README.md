@@ -144,6 +144,8 @@ python tools/convert_editorials.py
 
 - 数式は GitHub が表示できる `$…$` / `$$…$$` に直し、単純な表は Markdown の表にします。
 - 画像と同名のファイルがフォルダ内にあれば、外部 URL の代わりにそちらを参照します。
+- `problems/` 側の `editorial.md` が取り込み時の TODO 雛形のままなら、作った Markdown 版と HTML 版へのリンクに書き換えます。
+  手で書き換えた `editorial.md` はそのまま残します。問題の取り込み後に実行してください。
 - 生成した `editorial.md` は HTML の変更に合わせて作り直します。修正は `editorial.html` 側で行ってください。
   先頭の自動生成コメントがない（手書きの）`editorial.md` は上書きしません。
 
