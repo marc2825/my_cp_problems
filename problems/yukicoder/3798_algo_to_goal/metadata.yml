@@ -1,0 +1,30 @@
+# 自動項目と手動項目の区分は tools/README.md を参照してください。
+platform: yukicoder
+problem_no: 3798
+problem_id: 13460
+title: algo to goal
+url: https://yukicoder.me/problems/no/3798
+contest: yukicoder contest 523 オムニバス
+published_at: '2026-11-13T22:30:00+09:00'
+time_limit_ms: 2000
+memory_limit_mb: 1024
+author: marc2825
+difficulty: 3
+tags: []
+judge_type:
+source:
+  api_url: https://yukicoder.me/api/v1/problems/no/3798
+  level: 3
+  author_id: 17084
+  tester_ids: '24704'
+  problem_type: 0
+  eps_mode: '-'
+  eps: '0.0'
+  enable_pure_judge: false
+  allowed_langs: []
+  statement_updated_at: '2026-11-12 13:46:28'
+  judge_type: standard
+  contest_id: 635
+  contest_url: https://yukicoder.me/contests/635
+  contest_start_at: '2026-11-13T22:30:00+09:00'
+  contest_end_at: '2026-11-14T00:30:00+09:00'

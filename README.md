@@ -13,9 +13,9 @@
 問題文・解説・想定解法・テストケースごとに整理して保存しています。
 
 <!-- BEGIN AUTO:ARCHIVE_STATUS -->
-最終自動更新: **2026-11-09 08:08:14 JST**
+最終自動更新: **2026-11-14 11:32:08 JST**
 
-保存済み問題: **12 問** · [問題一覧](problems/README.md)
+保存済み問題: **13 問** · [問題一覧](problems/README.md)
 <!-- END AUTO:ARCHIVE_STATUS -->
 
 ## ディレクトリ構成
@@ -63,6 +63,22 @@ python tools/import_yukicoder.py --user 17084             # 取り込む
 
 ログインが必要な資料（解説・想定解・バリデータ・全テストケース）の取得、再実行時の動作、
 一覧の更新方法などは [tools/README.md](tools/README.md) を参照してください。
+
+## その他のコマンド
+
+いずれも通信なしで動き、`--dry-run` を付けると変更内容の確認だけを行います。
+
+```bash
+python tools/convert_editorials.py    # 解説 HTML を Markdown に変換
+python tools/update_problem_index.py  # README・問題一覧を更新
+python tools/clean_gitkeep.py         # 不要な .gitkeep を削除
+```
+
+## 今後の実装予定
+
+- ログイン済み Cookie などの認証情報を使った完全自動の取り込み。
+  解説・想定解・バリデータ・全テストケースの取得から、解説の Markdown 化、README・一覧の更新までを 1 コマンドで行う。
+  （現在は `--with-assets` で一部の資料を取得できますが、ログイン状態での一括取得は実サイトで未検証です）
 
 ## ライセンス
 

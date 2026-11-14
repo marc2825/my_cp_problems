@@ -21,7 +21,7 @@ source:
   eps: '0.0'
   enable_pure_judge: false
   allowed_langs: []
-  statement_updated_at: '2026-10-02 20:11:19'
+  statement_updated_at: '2026-10-26 13:47:38'
   contest_id: 610
   contest_url: https://yukicoder.me/contests/610
   contest_start_at: '2026-10-02T21:20:00+09:00'

@@ -8,6 +8,7 @@ yukicoder の問題をこのリポジトリに取り込み、問題一覧を管�
 | [`update_problem_index.py`](update_problem_index.py) | 保存済みデータから問題一覧と各問題の README を作り直す | なし |
 | [`check_problem_assets.py`](check_problem_assets.py) | 足りない資料（解説・テストなど）を確認する | なし |
 | [`convert_editorials.py`](convert_editorials.py) | 解説 HTML から Markdown 版を作る | なし |
+| [`clean_gitkeep.py`](clean_gitkeep.py) | 不要になった `.gitkeep` を削除する | なし |
 
 ## セットアップ
 
@@ -145,6 +146,19 @@ python tools/convert_editorials.py
 - 画像と同名のファイルがフォルダ内にあれば、外部 URL の代わりにそちらを参照します。
 - 生成した `editorial.md` は HTML の変更に合わせて作り直します。修正は `editorial.html` 側で行ってください。
   先頭の自動生成コメントがない（手書きの）`editorial.md` は上書きしません。
+
+## 不要な `.gitkeep` の削除
+
+Git は空のフォルダを記録できないため、空のフォルダには `.gitkeep` を置いています。
+フォルダに他のファイルを入れたあとは、次のコマンドで不要になった `.gitkeep` をまとめて削除できます。
+
+```bash
+python tools/clean_gitkeep.py --dry-run   # 削除対象を確認する
+python tools/clean_gitkeep.py
+```
+
+- 同じフォルダ（またはその下のフォルダ）に他のファイルがある `.gitkeep` だけを削除します。
+- `.git`・`.venv` などの隠しフォルダと `__pycache__` は対象外です。
 
 ## 注意点
 

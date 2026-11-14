@@ -5,9 +5,9 @@
 問題文・解説・想定解・バリデータ・テストケース一覧は各問題の README から参照できます。
 
 <!-- BEGIN AUTO:PROBLEM_INDEX -->
-最終自動更新: **2026-11-09 08:08:14 JST**
+最終自動更新: **2026-11-14 11:32:08 JST**
 
-保存済み問題: **12 問**
+保存済み問題: **13 問**
 
 ## yukicoder
 
@@ -25,4 +25,5 @@
 | [3753](https://yukicoder.me/problems/no/3753) | [Certainly a Cretan](yukicoder/3753_certainly_a_cretan/README.md) | ★3.5 | [yukicoder contest 516](https://yukicoder.me/contests/610) |
 | [3754](https://yukicoder.me/problems/no/3754) | [Mischievous Resident (Hard)](yukicoder/3754_mischievous_resident_hard/README.md) | ★4 | [yukicoder contest 516](https://yukicoder.me/contests/610) |
 | [3755](https://yukicoder.me/problems/no/3755) | [Root for Your Route](yukicoder/3755_root_for_your_route/README.md) | ★4 | [yukicoder contest 516](https://yukicoder.me/contests/610) |
+| [3798](https://yukicoder.me/problems/no/3798) | [algo to goal](yukicoder/3798_algo_to_goal/README.md) | ★3 | [yukicoder contest 523 オムニバス](https://yukicoder.me/contests/635) |
 <!-- END AUTO:PROBLEM_INDEX -->

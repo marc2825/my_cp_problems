@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<base href="https://yukicoder.me/problems/no/3798">
+<title>No.3798 algo to goal</title>
+<style>
+body { margin: 0; background: #f6f7f9; color: #222;
+  font-family: system-ui, sans-serif; line-height: 1.8; }
+main { max-width: 960px; margin: 2rem auto; padding: 2rem;
+  background: white; border: 1px solid #ddd; border-radius: 8px; }
+h1 { font-size: 1.6rem; line-height: 1.5; }
+h4 { font-size: 1.25rem; border-bottom: 1px solid #ddd; padding-bottom: .3rem; }
+h5 { font-size: 1.1rem; } h6 { font-size: 1rem; margin: 1rem 0 .5rem; }
+.block { margin: 2rem 0; } .sample { margin: 2rem 0; }
+pre { background: #f4f5f6; border: 1px solid #ddd; border-radius: 4px;
+  padding: 1rem; overflow-x: auto; white-space: pre;
+  font-family: ui-monospace, monospace; line-height: 1.5; }
+code { font-family: ui-monospace, monospace; }
+table { border-collapse: collapse; } th, td { border: 1px solid #ccc; padding: .5rem; }
+img, svg { max-width: 100%; } a { color: #0969da; }
+@media (max-width: 640px) { main { margin: 0; padding: 1rem; border-radius: 0; } }
+</style>
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']],
+    displayMath: [['$$', '$$'], ['\\[', '\\]']],
+    processEscapes: true
+  },
+  options: {
+    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'code', 'annotation', 'annotation-xml']
+  },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js"></script>
+</head>
+<body>
+<main id="content" data-problem-id="13460">
+<h1>No.3798 algo to goal</h1>
+<p><a href="https://yukicoder.me/problems/no/3798">yukicoder の公開ページ</a></p>
+<div class="block">
+<h4 class="shadow">問題文</h4>
+<p>
+<code>a-z</code> の英小文字からなる同じ長さの文字列 $S$, $T$ が与えられます。
+</p>
+<p>
+文字列 $S$ に対して、以下の操作<sup>†</sup>を $0$ 回以上の好きな回数行うことができます。
+</p>
+<ul>
+<li>
+現在の文字列において、連続する $4$ 文字を選び、
+<b>前半の $2$ 文字と後半の $2$ 文字を、それぞれの順序を保ったまま</b>入れ替える。
+</li>
+</ul>
+<p>
+$Q$ 個のテストケースが与えられます。各テストケースについて、
+この操作のみを用いて、$S$ を $T$ に一致させることができるか判定してください。
+</p>
+<hr/>
+<p>
+<sup>†</sup> この操作は、より形式的には以下のように表せます：
+</p>
+<ul>
+<li>
+現在の文字列を $X=x_1x_2\cdots x_{|X|}$ として、
+$1 \leq i \leq |X|-3$ を満たす整数 $i$ を選び、
+連続する $4$ 文字 $x_ix_{i+1}x_{i+2}x_{i+3}$ を
+$x_{i+2}x_{i+3}x_ix_{i+1}$ に置き換える。
+</li>
+</ul>
+</div>
+
+<div class="block">
+<h4 class="shadow">制約</h4>
+<ul>
+<li>$1 \leq Q \leq 10^5$</li>
+<li>$4 \leq |S| = |T|$</li>
+<li>すべてのテストケースにおける $|S|$ の総和は $10^6$ 以下</li>
+<li>$S$, $T$ は英小文字列</li>
+<li>$Q$ は整数</li>
+</ul>
+</div>
+
+<div class="block">
+<h4 class="shadow">入力</h4>
+<p>
+入力は以下の形式で標準入力から与えられます。ここで、
+$q\ (1 \leq q \leq Q)$ 番目のテストケースを $\mathrm{case}_q$ と表します。
+</p>
+<pre>$Q$
+$\mathrm{case}_1$
+$\mathrm{case}_2$
+$\vdots$
+$\mathrm{case}_Q$</pre>
+<p>
+各テストケースは以下の形式で与えられます。
+</p>
+<pre>$S$
+$T$</pre>
+<p>
+ここで、$S$, $T$ はそのテストケースにおける文字列を表します。
+</p>
+</div>
+
+<div class="block">
+<h4 class="shadow">出力</h4>
+<p>
+$Q$ 行出力してください。<br/>
+$i$ 行目には、$i$ 番目のテストケースについて、$S$ を $T$ に一致させることができるなら <code>Yes</code> を、そうでないなら <code>No</code> を出力してください。
+</p>
+</div>
+
+<div class="block">
+<h4 class="shadow">サンプル</h4>
+<div class="sample" data-file="00_sample_1.txt">
+<h5 class="underline">サンプル1</h5>
+<div class="paragraph">
+<h6>入力</h6>
+<pre>4
+algo
+goal
+algorithm
+logarithm
+medical
+decimal
+integral
+triangle</pre>
+<h6>出力</h6>
+<pre>Yes
+No
+Yes
+No</pre>
+<p>
+                $1$ 番目のテストケースでは、文字列全体に対して $1$ 回操作すると、<code>algo</code> は <code>goal</code> に変化します。<br/>
+                $2$ 番目および $4$ 番目のテストケースでは、どのように操作しても $S$ を $T$ に一致させることはできません。<br/>
+</p>
+</div>
+</div>
+</div>
+</main>
+</body>
+</html>
